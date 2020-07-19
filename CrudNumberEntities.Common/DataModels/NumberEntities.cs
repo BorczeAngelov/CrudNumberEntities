@@ -4,6 +4,6 @@ namespace CrudNumberEntities.Common.DataModels
 {
     public class NumberEntities
     {
-        List<NumberEntitiy> ListOfNumbers { get; set; }
+        public List<NumberEntitiy> ListOfNumbers { get; set; }
     }
 }
