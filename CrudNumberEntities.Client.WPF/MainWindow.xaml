@@ -5,9 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CrudNumberEntities.Client.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow"
+        Height="450"
+        Width="800">
     <Grid>
-        <Button Content="Connect" 
-                Click="OnConnectClick"/>
+        <Button Content="Connect"
+                Click="OnConnectClick"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="20" />
+
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
+            <Button Content="Create"
+                    Click="OnCreateClick"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+
+            <Button Content="Update"
+                    Click="OnUpdateClick"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="5,0" />
+
+            <TextBox x:Name="NumberTextBox"
+                     IsReadOnly="True"
+                     Width="50"
+                     Margin="5,0" />
+
+        </StackPanel>
     </Grid>
 </Window>
