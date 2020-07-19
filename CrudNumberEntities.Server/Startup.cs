@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using CrudNumberEntities.Common.Utils;
+using CrudNumberEntities.Server.SignalRHubs;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,7 +30,7 @@ namespace CrudNumberEntities.Server
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapHub<TextBoxHub>(DemoConstants.TextBoxHubEndpoint);
+                endpoints.MapHub<NumbersHub>(DemoUrlConstants.NumbersHubEndpoint);
             });
         }
     }
