@@ -1,7 +1,7 @@
 ﻿using CrudNumberEntities.Common.DataModels;
 using CrudNumberEntities.Common.HubInterfaces;
+using CrudNumberEntities.Server.BusinessLogic.PublicOperations;
 using Microsoft.AspNetCore.SignalR;
-using System;
 using System.Threading.Tasks;
 
 namespace CrudNumberEntities.Server.SignalRHubs
@@ -16,21 +16,19 @@ namespace CrudNumberEntities.Server.SignalRHubs
 
         public async Task Create()
         {
-            throw new NotImplementedException();
-            NumberEntitiy number = null;
-            await Clients.All.SendAsync(nameof(INumbersHubClient.InvokeCreate), number);
+            var newNumber = CreateNumberImp.CreateRandomNumber();
+            await Clients.All.SendAsync(nameof(INumbersHubClient.InvokeCreate), newNumber);
         }
 
         public async Task Update(NumberEntitiy number)
         {
-            throw new NotImplementedException();
-            NumberEntitiy updatedNumber = null;
-            await Clients.All.SendAsync(nameof(INumbersHubClient.InvokeUpdate), updatedNumber);
+            UpdateNumberImp.UpdateNumber(number);
+            await Clients.All.SendAsync(nameof(INumbersHubClient.InvokeUpdate), number);
         }
 
         public async Task Delete(NumberEntitiy number)
-        {
-            throw new NotImplementedException();
+        {          
+            DeleteNumberImp.DeleteNumber(number);   //TODO: Implement something useful here....
             await Clients.All.SendAsync(nameof(INumbersHubClient.InvokeDelete), number);
         }
     }
