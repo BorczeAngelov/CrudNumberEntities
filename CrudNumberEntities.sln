@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrudNumberEntities.Common", "CrudNumberEntities.Common\CrudNumberEntities.Common.csproj", "{6560CA92-7FA0-4401-86DC-E1B1B7CBB7F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrudNumberEntities.Server.BusinessLogic", "CrudNumberEntities.Server.BusinessLogic\CrudNumberEntities.Server.BusinessLogic.csproj", "{37FE7418-1AF3-4B07-95F4-77B1E0E5E5C1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6560CA92-7FA0-4401-86DC-E1B1B7CBB7F9} = {6560CA92-7FA0-4401-86DC-E1B1B7CBB7F9}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
