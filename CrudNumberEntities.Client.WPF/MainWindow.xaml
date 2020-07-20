@@ -9,33 +9,33 @@
         Height="450"
         Width="800">
     <Grid>
-        <Button Content="Connect"
-                Click="OnConnectClick"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Margin="20" />
-
 
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
 
             <Button Content="Create"
-                    Click="OnCreateClick"
+                    Command="{Binding CreateCommand}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center" />
 
             <Button Content="Update"
-                    Click="OnUpdateClick"
+                    Command="{Binding SelectedNumber.UpdateCommand}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Margin="5,0" />
 
-            <TextBox x:Name="NumberTextBox"
+            <TextBox Text="{Binding SelectedNumber.Value, Mode=OneWay}"
                      IsReadOnly="True"
                      Width="50"
                      Margin="5,0" />
 
         </StackPanel>
+
+        <Button Content="Connect"
+                Command="{Binding ConnectCommand}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="20" />
     </Grid>
 </Window>

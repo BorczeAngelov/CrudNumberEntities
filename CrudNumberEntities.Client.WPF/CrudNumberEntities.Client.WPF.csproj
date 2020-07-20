@@ -14,4 +14,8 @@
     <ProjectReference Include="..\CrudNumberEntities.Common\CrudNumberEntities.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="View\" />
+  </ItemGroup>
+
 </Project>

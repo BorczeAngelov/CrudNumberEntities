@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace CrudNumberEntities.Client.WPF.Utils
 {
-    abstract internal class ObservableBase : INotifyPropertyChanged
+    abstract public class ObservableBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
