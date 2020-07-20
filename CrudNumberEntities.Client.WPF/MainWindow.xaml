@@ -15,17 +15,17 @@
                     VerticalAlignment="Center">
 
             <Button Content="Create"
-                    Command="{Binding CreateCommand}"
+                    Command="{Binding NumberEntitiesVM.CreateCommand}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center" />
 
             <Button Content="Update"
-                    Command="{Binding SelectedNumber.UpdateCommand}"
+                    Command="{Binding NumberEntitiesVM.SelectedNumber.UpdateCommand}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Margin="5,0" />
 
-            <TextBox Text="{Binding SelectedNumber.Value, Mode=OneWay}"
+            <TextBox Text="{Binding NumberEntitiesVM.SelectedNumber.Value, Mode=OneWay}"
                      IsReadOnly="True"
                      Width="50"
                      Margin="5,0" />

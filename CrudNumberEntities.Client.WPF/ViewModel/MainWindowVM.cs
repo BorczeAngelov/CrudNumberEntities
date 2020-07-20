@@ -11,19 +11,17 @@ namespace CrudNumberEntities.Client.WPF.ViewModel
         private readonly NumbersHubClient _numbersHubClient;
 
         private bool _isConnected;
-        private NumberEntityVM _selectedNumber;
 
         public MainWindowVM()
         {
-            ConnectCommand = new DelegateCommand(Connect, arg => !IsConnected);
-            CreateCommand = new DelegateCommand(Create);
-
             _numbersHubClient = new NumbersHubClient();
-            _numbersHubClient.NumberCreated += OnNumberCreated;
+
+            ConnectCommand = new DelegateCommand(Connect, arg => !IsConnected);
+            NumberEntitiesVM= new NumberEntitiesVM(_numbersHubClient);
         }
 
         public DelegateCommand ConnectCommand { get; }
-        public DelegateCommand CreateCommand { get; }
+        public NumberEntitiesVM NumberEntitiesVM { get; }
 
         public bool IsConnected
         {
@@ -33,19 +31,6 @@ namespace CrudNumberEntities.Client.WPF.ViewModel
                 if (_isConnected != value)
                 {
                     _isConnected = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public NumberEntityVM SelectedNumber
-        {
-            get => _selectedNumber;
-            set
-            {
-                if (_selectedNumber != value)
-                {
-                    _selectedNumber = value;
                     OnPropertyChanged();
                 }
             }
@@ -63,17 +48,6 @@ namespace CrudNumberEntities.Client.WPF.ViewModel
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        private async void Create(object obj)
-        {
-            await _numbersHubClient.ServerHub.Create();
-        }
-
-        private void OnNumberCreated(NumberEntitiy newNumber)
-        {
-            var newVM = new NumberEntityVM(newNumber, _numbersHubClient);
-            SelectedNumber = newVM;
         }
     }
 }
