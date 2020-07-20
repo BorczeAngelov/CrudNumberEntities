@@ -2,13 +2,14 @@
 using CrudNumberEntities.Client.WPF.Utils;
 using CrudNumberEntities.Common.DataModels;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 
 namespace CrudNumberEntities.Client.WPF.ViewModel
 {
     public class NumberEntitiesVM : ObservableBase
     {
         private readonly NumbersHubClient _numbersHubClient;
-        private NumberEntityVM _selectedNumber;
 
         internal NumberEntitiesVM(
             NumbersHubClient numbersHubClient,
@@ -16,6 +17,7 @@ namespace CrudNumberEntities.Client.WPF.ViewModel
         {
             _numbersHubClient = numbersHubClient;
             _numbersHubClient.NumberCreated += OnNumberCreated;
+            _numbersHubClient.NumberDeleted += OnNumberDeleted;
 
             CreateCommand = new DelegateCommand(Create);
 
@@ -32,19 +34,6 @@ namespace CrudNumberEntities.Client.WPF.ViewModel
         public ObservableCollection<NumberEntityVM> NumberEntitiyVMs { get; } = new ObservableCollection<NumberEntityVM>();
         public DelegateCommand CreateCommand { get; }
 
-        public NumberEntityVM SelectedNumber
-        {
-            get => _selectedNumber;
-            set
-            {
-                if (_selectedNumber != value)
-                {
-                    _selectedNumber = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
         private async void Create(object obj)
         {
             await _numbersHubClient.ServerHub.Create();
@@ -54,7 +43,16 @@ namespace CrudNumberEntities.Client.WPF.ViewModel
         {
             var numberEntityVM = new NumberEntityVM(numberEntitiy, _numbersHubClient);
             NumberEntitiyVMs.Add(numberEntityVM);
-            SelectedNumber = numberEntityVM; //Demo
+        }
+
+        private void OnNumberDeleted(NumberEntitiy numberEntitiy)
+        {
+            var numberEntityVM = NumberEntitiyVMs.FirstOrDefault(x => x.Guid == numberEntitiy.Guid);
+            if (numberEntityVM != null)
+            {
+                Debug.Assert(NumberEntitiyVMs.Contains(numberEntityVM));
+                NumberEntitiyVMs.Remove(numberEntityVM);
+            }
         }
     }
 }

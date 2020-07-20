@@ -18,11 +18,12 @@ namespace CrudNumberEntities.Client.WPF.ViewModel
             _numbersHubClient = numbersHubClient;
 
             UpdateCommand = new DelegateCommand(Update);
+            DeleteCommand = new DelegateCommand(Delete);
             _numbersHubClient.NumberUpdated += OnNumberUpdated;
         }
 
         public DelegateCommand UpdateCommand { get; }
-        //public DelegateCommand DeleteCommand { get; }
+        public DelegateCommand DeleteCommand { get; }
 
         public Guid Guid { get => _numberEntity.Guid; }
         public int Value
@@ -49,6 +50,11 @@ namespace CrudNumberEntities.Client.WPF.ViewModel
         private async void Update(object obj)
         {
             await _numbersHubClient.ServerHub.Update(_numberEntity);
+        }
+
+        private async void Delete(object obj)
+        {
+            await _numbersHubClient.ServerHub.Delete(_numberEntity);
         }
     }
 }

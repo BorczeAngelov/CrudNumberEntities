@@ -4,34 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CrudNumberEntities.Client.WPF"
+        xmlns:view="clr-namespace:CrudNumberEntities.Client.WPF.View"
         mc:Ignorable="d"
         Title="MainWindow"
         Height="450"
         Width="800">
     <Grid>
 
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-
-            <Button Content="Create"
-                    Command="{Binding NumberEntitiesVM.CreateCommand}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" />
-
-            <Button Content="Update"
-                    Command="{Binding NumberEntitiesVM.SelectedNumber.UpdateCommand}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Margin="5,0" />
-
-            <TextBox Text="{Binding NumberEntitiesVM.SelectedNumber.Value, Mode=OneWay}"
-                     IsReadOnly="True"
-                     Width="50"
-                     Margin="5,0" />
-
-        </StackPanel>
-
+        <view:NumberEntitiesView DataContext="{Binding NumberEntitiesVM}" />
+        
         <Button Content="Connect"
                 Command="{Binding ConnectCommand}"
                 HorizontalAlignment="Right"
