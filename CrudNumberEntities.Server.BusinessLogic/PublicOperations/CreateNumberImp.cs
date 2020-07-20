@@ -1,18 +1,13 @@
 ﻿using CrudNumberEntities.Common.DataModels;
-using System;
+using CrudNumberEntities.Server.BusinessLogic.InternalOperations;
 
 namespace CrudNumberEntities.Server.BusinessLogic.PublicOperations
 {
     public static class CreateNumberImp
     {
-        public static NumberEntitiy CreateRandomNumber()
+        public static NumberEntitiy CreateNumberEntity()
         {
-            var newNumberEntitiy = new NumberEntitiy()
-            {
-                Guid = Guid.NewGuid(),
-                Value = 42 //TODO: Implement random generator
-            };
-            return newNumberEntitiy;
+            return NumberEntityFactory.CreateRandomNumber();
         }
     }
 }

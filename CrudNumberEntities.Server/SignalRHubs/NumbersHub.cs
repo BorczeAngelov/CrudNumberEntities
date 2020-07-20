@@ -16,7 +16,7 @@ namespace CrudNumberEntities.Server.SignalRHubs
 
         public async Task Create()
         {
-            var newNumber = CreateNumberImp.CreateRandomNumber();
+            var newNumber = CreateNumberImp.CreateNumberEntity();
             await Clients.All.SendAsync(nameof(INumbersHubClient.InvokeCreate), newNumber);
         }
 
@@ -27,8 +27,7 @@ namespace CrudNumberEntities.Server.SignalRHubs
         }
 
         public async Task Delete(NumberEntitiy number)
-        {          
-            DeleteNumberImp.DeleteNumber(number);   //TODO: Implement something useful here....
+        {
             await Clients.All.SendAsync(nameof(INumbersHubClient.InvokeDelete), number);
         }
     }

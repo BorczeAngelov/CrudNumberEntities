@@ -1,4 +1,5 @@
 ﻿using CrudNumberEntities.Common.DataModels;
+using CrudNumberEntities.Server.BusinessLogic.InternalOperations;
 
 namespace CrudNumberEntities.Server.BusinessLogic.PublicOperations
 {
@@ -6,7 +7,7 @@ namespace CrudNumberEntities.Server.BusinessLogic.PublicOperations
     {
         public static void UpdateNumber(NumberEntitiy numberEntitiy)
         {
-            numberEntitiy.Value--; //TODO: Implement random generator
+            numberEntitiy.Value -= SpecialRandomNumberValueGenerator.GenerateSpecialValue();
         }
     }
 }
