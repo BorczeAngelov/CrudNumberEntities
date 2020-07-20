@@ -6,11 +6,24 @@
              xmlns:local="clr-namespace:CrudNumberEntities.Client.WPF.View"
              mc:Ignorable="d">
     <StackPanel>
+        <StackPanel.Style>
+            <Style TargetType="StackPanel">
+                <Setter Property="IsEnabled"
+                        Value="True" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding DataContext, RelativeSource={RelativeSource Mode=Self}}"
+                                 Value="{x:Null}">
+                        <Setter Property="IsEnabled"
+                                Value="False" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </StackPanel.Style>
         <Button Content="Create"
                 Command="{Binding CreateCommand}"
                 HorizontalAlignment="Left"
                 Margin="20" />
-        
+
         <ListView ItemsSource="{Binding NumberEntitiyVMs}"
                   SelectionMode="Single">
             <ItemsControl.ItemTemplate>
