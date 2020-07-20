@@ -2,6 +2,7 @@
 using CrudNumberEntities.Client.WPF.Utils;
 using CrudNumberEntities.Common.DataModels;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace CrudNumberEntities.Client.WPF.ViewModel
@@ -9,19 +10,36 @@ namespace CrudNumberEntities.Client.WPF.ViewModel
     public class MainWindowVM : ObservableBase
     {
         private readonly NumbersHubClient _numbersHubClient;
-
+        private NumberEntitiesVM _numberEntitiesVM;
         private bool _isConnected;
 
         public MainWindowVM()
         {
             _numbersHubClient = new NumbersHubClient();
+            _numbersHubClient.StartingValuesLoaded += OnStartingValuesLoaded;
 
             ConnectCommand = new DelegateCommand(Connect, arg => !IsConnected);
-            NumberEntitiesVM= new NumberEntitiesVM(_numbersHubClient);
+        }
+
+        private void OnStartingValuesLoaded(IEnumerable<NumberEntitiy> numbers)
+        {
+            NumberEntitiesVM = new NumberEntitiesVM(numbers, _numbersHubClient);
         }
 
         public DelegateCommand ConnectCommand { get; }
-        public NumberEntitiesVM NumberEntitiesVM { get; }
+
+        public NumberEntitiesVM NumberEntitiesVM
+        {
+            get => _numberEntitiesVM;
+            private set
+            {
+                if (_numberEntitiesVM != value)
+                {
+                    _numberEntitiesVM = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool IsConnected
         {

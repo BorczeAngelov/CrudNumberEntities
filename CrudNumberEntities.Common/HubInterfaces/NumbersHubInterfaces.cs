@@ -1,5 +1,6 @@
 ﻿using CrudNumberEntities.Common.DataModels;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CrudNumberEntities.Common.HubInterfaces
@@ -16,6 +17,7 @@ namespace CrudNumberEntities.Common.HubInterfaces
         void InvokeCreate(NumberEntitiy number);
         void InvokeUpdate(NumberEntitiy number);
         void InvokeDelete(NumberEntitiy number);
+        void InvokeLoadStartingValues(IEnumerable<NumberEntitiy> numbers);
     }
 
     public interface INumbersHubClientTwoWayComm : INumbersHubClient
@@ -23,6 +25,7 @@ namespace CrudNumberEntities.Common.HubInterfaces
         event Action<NumberEntitiy> NumberCreated;
         event Action<NumberEntitiy> NumberUpdated;
         event Action<NumberEntitiy> NumberDeleted;
+        event Action<IEnumerable<NumberEntitiy>> StartingValuesLoaded;
 
         INumbersHub ServerHub { get; }
 

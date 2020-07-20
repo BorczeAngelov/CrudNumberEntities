@@ -1,7 +1,9 @@
 ﻿using CrudNumberEntities.Common.DataModels;
 using CrudNumberEntities.Common.HubInterfaces;
 using CrudNumberEntities.Server.BusinessLogic.PublicOperations;
+using CrudNumberEntities.Server.CachedState;
 using Microsoft.AspNetCore.SignalR;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CrudNumberEntities.Server.SignalRHubs
@@ -10,25 +12,30 @@ namespace CrudNumberEntities.Server.SignalRHubs
     {
         public override Task OnConnectedAsync()
         {
-            //TODO: read current global state
+            var startingValues = CachedStateSingleton.GetInstance.NumberEntities;
+            Clients.Caller.SendAsync(nameof(INumbersHubClient.InvokeLoadStartingValues), startingValues);
             return base.OnConnectedAsync();
         }
 
         public async Task Create()
         {
             var newNumber = CreateNumberImp.CreateNumberEntity();
+            CachedStateSingleton.GetInstance.NumberEntities.Add(newNumber);
             await Clients.All.SendAsync(nameof(INumbersHubClient.InvokeCreate), newNumber);
         }
 
-        public async Task Update(NumberEntitiy number)
+        public async Task Update(NumberEntitiy clientNumber)
         {
-            UpdateNumberImp.UpdateNumber(number);
-            await Clients.All.SendAsync(nameof(INumbersHubClient.InvokeUpdate), number);
+            var numberEntitiyFromCache = CachedStateSingleton.GetInstance.NumberEntities.First(x => x.Guid == clientNumber.Guid);
+            UpdateNumberImp.UpdateNumber(numberEntitiyFromCache);
+            await Clients.All.SendAsync(nameof(INumbersHubClient.InvokeUpdate), numberEntitiyFromCache);
         }
 
-        public async Task Delete(NumberEntitiy number)
+        public async Task Delete(NumberEntitiy clientNumber)
         {
-            await Clients.All.SendAsync(nameof(INumbersHubClient.InvokeDelete), number);
+            var numberEntitiyFromCache = CachedStateSingleton.GetInstance.NumberEntities.First(x => x.Guid == clientNumber.Guid);
+            CachedStateSingleton.GetInstance.NumberEntities.Remove(numberEntitiyFromCache);
+            await Clients.All.SendAsync(nameof(INumbersHubClient.InvokeDelete), numberEntitiyFromCache);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CrudNumberEntities.Client.WPF.HubClientsTwoWayComm;
 using CrudNumberEntities.Client.WPF.Utils;
 using CrudNumberEntities.Common.DataModels;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -12,22 +13,21 @@ namespace CrudNumberEntities.Client.WPF.ViewModel
         private readonly NumbersHubClient _numbersHubClient;
 
         internal NumberEntitiesVM(
-            NumbersHubClient numbersHubClient,
-            NumberEntities numberEntities = null)
+            IEnumerable<NumberEntitiy> numberEntities,
+            NumbersHubClient numbersHubClient)
         {
+            Debug.Assert(numberEntities != null);
+
             _numbersHubClient = numbersHubClient;
             _numbersHubClient.NumberCreated += OnNumberCreated;
             _numbersHubClient.NumberDeleted += OnNumberDeleted;
 
             CreateCommand = new DelegateCommand(Create);
 
-            if (numberEntities != null)
+            foreach (var numberEntitiy in numberEntities)
             {
-                foreach (var numberEntitiy in numberEntities.ListOfNumbers)
-                {
-                    var numberEntityVM = new NumberEntityVM(numberEntitiy, _numbersHubClient);
-                    NumberEntitiyVMs.Add(numberEntityVM);
-                }
+                var numberEntityVM = new NumberEntityVM(numberEntitiy, _numbersHubClient);
+                NumberEntitiyVMs.Add(numberEntityVM);
             }
         }
 
